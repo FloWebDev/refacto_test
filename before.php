@@ -1,22 +1,7 @@
-# Refacto test
-Test de refactorisation
-
-
-## Objectif de l'exercice :
-
-Présenter une amélioration possible d'un code legacy en code plus moderne.
-
-## Méthode :
-
-Voici un morceau de code legacy. Présentez quelle approche vous proposeriez pour le moderniser : 
-
-```php 
-
 <?php
 
 class Archer
 {
-
     private $pointsdevie;
     private $fleches;
     public $position_x;
@@ -26,13 +11,13 @@ class Archer
     {
         $this->pointsdevie = $pointsdevie;
         $this->fleches     = $fleches;
-        $this->position_y = 0;
-        $this->position_x = 0;
+        $this->position_y  = 0;
+        $this->position_x  = 0;
     }
 
     public function deplacement(int $case, string $direction)
     {
-        for($i = 0; $i<$case; $i++) {
+        for ($i = 0; $i < $case; $i++) {
             if ($direction == 'N') {
                 $this->position_y++;
             } elseif ($direction == 'NE') {
@@ -54,7 +39,6 @@ class Archer
 
 class Sorcier
 {
-
     private $pointsdevie;
     private $pointsdemana;
     public $position_x;
@@ -64,13 +48,13 @@ class Sorcier
     {
         $this->pointsdevie  = $pointsdevie;
         $this->pointsdemana = $pointsdemana;
-        $this->position_y = 0;
-        $this->position_x = 0;
+        $this->position_y   = 0;
+        $this->position_x   = 0;
     }
 
     public function deplacement(int $case, string $direction)
     {
-        for($i = 0; $i<$case; $i++) {
+        for ($i = 0; $i < $case; $i++) {
             if ($direction == 'N') {
                 $this->position_y++;
             } elseif ($direction == 'NE') {
