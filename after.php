@@ -50,7 +50,7 @@ abstract class Hero
             }
         }
 
-        return $this->positionX.';'.$this->positionY;
+        return $this->positionX . ';' . $this->positionY;
     }
 }
 
@@ -116,11 +116,11 @@ function main(): void
         $joueur_1->deplacement(6, 'N');
         $joueur_1->deplacement(6, 'N');
         echo $joueur_1->deplacement(6, 'N');
-        echo "<br>";
+        echo '<br>';
         echo $joueur_2->deplacement(4, 'NE');
-        echo "<br>";
+        echo '<br>';
 
-        $invocation = $joueur_2->invoquer("ifrit");
+        $invocation = $joueur_2->invoquer('ifrit');
     } catch (HeroException $e) {
         echo '<p>Erreur : ' . $e->getMessage() . '</p>';
     }
