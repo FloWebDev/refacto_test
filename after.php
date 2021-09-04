@@ -14,15 +14,15 @@ abstract class Hero
     {
         $this->pointsDeVie = $pointsDeVie;
         $this->weapon      = $weapon;
-        $this->positionY  = 0;
-        $this->positionX  = 0;
+        $this->positionY   = 0;
+        $this->positionX   = 0;
     }
 
     public function deplacement(int $case, string $direction): string
     {
         $splitDirection = str_split($direction);
         if (!is_array($splitDirection) || count($splitDirection) > 2) {
-            throw new HeroException('Direction incorrecte');
+            throw new HeroException('Direction non autorisée');
         }
 
         foreach ($splitDirection as $dir) {
@@ -59,9 +59,18 @@ class Archer extends Hero
 class Sorcier extends Hero
 {
     const INVOCATIONS = [
-        'ifrit'   => 50,
-        'shiva'   => 80,
-        'Bahamut' => 80000
+        'IFRIT' => [
+            'nom' => 'ifrit',
+            'pdv' => 50
+        ],
+        'SHIVA' => [
+            'nom' => 'shiva',
+            'pdv' => 80
+        ],
+        'BAHAMUT' => [
+            'nom' => 'Bahamut',
+            'pdv' => 80000
+        ],
     ];
 
     public function __construct(int $pointsDeVie, int $weapon = 50)
@@ -71,8 +80,9 @@ class Sorcier extends Hero
 
     public function invoquer(string $creature): array
     {
+        $creature = mb_strtoupper($creature);
         return array_key_exists($creature, self::INVOCATIONS) ?
-            ['nom' => $creature, 'pdv' => self::INVOCATIONS[$creature]] :
+            ['nom' => self::INVOCATIONS[$creature]['nom'], 'pdv' => self::INVOCATIONS[$creature]['pdv']] :
             ['nom' => 'Démon inconnu', 'pdv' => 100];
     }
 }
@@ -84,20 +94,24 @@ class HeroException extends Exception
 {
 }
 
-function main()
+function main(): void
 {
-    $joueur_1 = new Archer(100);
-    $joueur_2 = new Sorcier(100, 100);
+    try {
+        $joueur_1 = new Archer(100);
+        $joueur_2 = new Sorcier(100, 100);
 
-    $joueur_1->deplacement(6, 'N');
-    $joueur_1->deplacement(6, 'N');
-    $joueur_1->deplacement(6, 'N');
-    echo $joueur_1->deplacement(6, 'N');
-    echo "<br>";
-    echo $joueur_2->deplacement(4, 'NE');
-    echo "<br>";
+        $joueur_1->deplacement(6, 'N');
+        $joueur_1->deplacement(6, 'N');
+        $joueur_1->deplacement(6, 'N');
+        echo $joueur_1->deplacement(6, 'N');
+        echo "<br>";
+        echo $joueur_2->deplacement(4, 'NE');
+        echo "<br>";
 
-    $invocation = $joueur_2->invoquer("ifrit");
+        $invocation = $joueur_2->invoquer("ifrit");
+    } catch (HeroException $e) {
+        echo '<p>Erreur : ' . $e->getMessage() . '</p>';
+    }
 }
 
 main();
