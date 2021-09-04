@@ -9,6 +9,7 @@ abstract class Hero
     protected int $weapon;
     protected int $positionX;
     protected int $positionY;
+    const ERROR_DIRECTION_MESSAGE = 'Direction non autorisée';
 
     protected function __construct(int $pointsDeVie, int $weapon)
     {
@@ -21,8 +22,19 @@ abstract class Hero
     public function deplacement(int $case, string $direction): string
     {
         $splitDirection = str_split($direction);
-        if (!is_array($splitDirection) || count($splitDirection) > 2) {
-            throw new HeroException('Direction non autorisée');
+        if (!is_array($splitDirection) || count($splitDirection) < 1 || count($splitDirection) > 2) {
+            throw new HeroException(self::ERROR_DIRECTION_MESSAGE);
+        }
+
+        if (count($splitDirection) === 1) {
+            if (!in_array(mb_strtoupper($splitDirection[0]), ['N', 'S', 'E', 'W'])) {
+                throw new HeroException(self::ERROR_DIRECTION_MESSAGE);
+            }
+        } elseif (count($splitDirection) === 2) {
+            if (!in_array(mb_strtoupper($splitDirection[0]), ['N', 'S']) ||
+            !in_array(mb_strtoupper($splitDirection[1]), ['E', 'W'])) {
+                throw new HeroException(self::ERROR_DIRECTION_MESSAGE);
+            }
         }
 
         foreach ($splitDirection as $dir) {
